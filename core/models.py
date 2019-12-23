@@ -5,7 +5,7 @@ from django.utils import timezone
 # Create your models here.
 class Tournament(models.Model):
     name = models.CharField(max_length=200)
-    start_time = models.DateTimeField(default = timezone.now())
+    start_time = models.DateTimeField(default=timezone.now())
     players = models.ManyToManyField(User, related_name = 'played_tournaments', blank = True)
     hosts = models.ManyToManyField(User, related_name = 'hosted_tournaments')
     max_stages = models.PositiveSmallIntegerField(default = 1) 
@@ -24,7 +24,7 @@ class Tournament(models.Model):
 class Match(models.Model):
     player1 = models.ForeignKey(User, null=True, on_delete = models.SET_NULL, related_name="matches_as_p1")
     player2 = models.ForeignKey(User, null=True, on_delete = models.SET_NULL, related_name="matches_as_p2")
-    start_time = models.DateTimeField(default = timezone.now())
+    start_time = models.DateTimeField(default=timezone.now())
     finished = models.BooleanField(default=False)
     p1_score = models.PositiveSmallIntegerField(default = 0)
     p2_score = models.PositiveSmallIntegerField(default = 0)

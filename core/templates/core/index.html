@@ -1,0 +1,11 @@
+{% if latest_tournament_list %}
+<ul>
+    {% for tournament in latest_tournament_list %}
+    <li>
+        <h1>{{tournament.name}}</h1>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No tournaments are available.</p>
+{% endif %}
