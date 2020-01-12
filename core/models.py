@@ -21,6 +21,10 @@ class Tournament(models.Model):
     )
     def __str__(self):
         return self.name
+    def stages(self):
+        return range(1, self.max_stages + 1)
+    def matches_of_stage(self, stage):
+        return  self.tournament.match_set.all().filter(stage=stage)
 class Match(models.Model):
     player1 = models.ForeignKey(User, null=True, on_delete = models.SET_NULL, related_name="matches_as_p1")
     player2 = models.ForeignKey(User, null=True, on_delete = models.SET_NULL, related_name="matches_as_p2")
