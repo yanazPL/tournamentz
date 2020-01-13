@@ -34,3 +34,11 @@ class Match(models.Model):
     p2_score = models.PositiveSmallIntegerField(default = 0)
     stage = models.PositiveSmallIntegerField(default=1)
     tournament = models.ForeignKey(Tournament, on_delete = models.CASCADE, null=True)
+
+    def winner(self):
+        if self.p1_score > self.p2_score:
+            return self.player1
+        elif self.p2_score > self.p1_score:
+            return self.player2
+        else:
+            return None

@@ -14,9 +14,13 @@
 
                     <li class="spacer">&nbsp;</li>
 
-                    <li class="game game-top">{{match.player1}}<span>{{match.p1_score}}</span></li>
+                    <li
+                        class="game game-top {% if match.winner == match.player1 and match.player != None %}winner{% endif %}">
+                        {{match.player1}}<span>{{match.p1_score}}</span></li>
                     <li class="game game-spacer">&nbsp;</li>
-                    <li class="game game-bottom">{{match.player2}}<span>{{match.p2_score}}<span></span></li>
+                    <li
+                        class="game game-bottom {% if match.winner == match.player2 and match.player != None %}winner{% endif %}">
+                        {{match.player2}}<span>{{match.p2_score}}<span></span></li>
                     {% endfor %}
                     <li class="spacer">&nbsp;</li>
                 </ul>

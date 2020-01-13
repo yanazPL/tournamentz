@@ -45,6 +45,7 @@ li.game {
 
 li.game.winner {
     font-weight: bold;
+    color: green;
 }
 
 li.game span {
