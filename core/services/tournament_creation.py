@@ -37,7 +37,8 @@ def create_se_matches(tournament, player_list):
     matches_in_stage = []
     for i in range(matches_count):
         match = Match(
-            player1=avaliable_players.pop(),
+            player1= (avaliable_players.pop()
+                    if avaliable_players else None),
             player2=None,
             tournament=tournament,
             stage=1
@@ -45,7 +46,8 @@ def create_se_matches(tournament, player_list):
         matches_in_stage.append(match)
     for match in matches_in_stage:
         if avaliable_players: 
-            match.player2 = avaliable_players.pop()
+            match.player2 = (avaliable_players.pop()
+                            if avaliable_players else None)
         match.save()
     matches_count //= 2
 
