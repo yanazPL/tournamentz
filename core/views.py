@@ -1,6 +1,7 @@
 from django.shortcuts import render, reverse
 from django.views import generic
 from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
 from core.models import Tournament
 from core.services.tournament_creation import tournament_creation
 from . import forms
