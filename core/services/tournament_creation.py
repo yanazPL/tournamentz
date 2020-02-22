@@ -10,6 +10,8 @@ def tournament_creation(
     tournament.name = name
     tournament.bracket_type = bracket_type
     player_list = usernames_to_player_list(usernames_str)
+    tournament.save()
+    add_players(tournament, player_list)
     if bracket_type == Tournament.SINGLE_ELIMINATION:
         create_se_matches(tournament, player_list)
 
@@ -24,6 +26,12 @@ def usernames_to_player_list(players_str: str):
         # TODO  deisplay error message
             continue
     return player_list
+
+
+def add_players(tournament, player_list):
+    for player in player_list:
+        tournament.players.add(player)
+    tournament.save()
 
 
 def create_se_matches(tournament, player_list):

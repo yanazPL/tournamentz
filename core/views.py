@@ -20,6 +20,8 @@ class TournamentDetailView(generic.DetailView):
     model = Tournament
     template_name = 'core/tournament_detail.html'
 
+def base(request):
+    return render(request, 'core/base.html')
 
 def create_tournament(request):
     if request.method == 'POST':

@@ -1,0 +1,18 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<nav>
+    <ul>
+        <li>Index</li>
+        <li class="searchbox">
+            <form>
+                <input type="text" id=></input>
+                <submit></submit>
+            </form>
+        </li>
+        <li class="username">
+            {% if user.is_authenticated %}
+            <p>{{user.username}}</p>
+        </li>
+    </ul>
+</nav>
+{% endblock %}
