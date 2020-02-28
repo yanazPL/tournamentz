@@ -1,8 +1,29 @@
 <html>
+{% load static %}
+
+<head>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
 
 <body>
-    {% block content %}
-    {% endblock %}
+    <nav>
+        <ul>
+            <li><a>Index</a></li>
+            <li class="searchbox">
+                <form>
+                    <input type="text"></input>
+                    <input type="submit" value="&#128269;"></input>
+                </form>
+            </li>
+            <li class="username">
+                {% if user.is_authenticated %}
+                <a>{{user.username}}</a>
+                {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                {% endif %}
+                </a></li>
+        </ul>
+    </nav></a>
 </body>
 
 </html>
