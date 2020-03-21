@@ -1,7 +1,8 @@
 from django.shortcuts import render, reverse
 from django.views import generic
-from django.http import HttpResponseRedirect
-from django.shortcuts import redirect
+from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import redirect, get_object_or_404
+from django.contrib.auth.models import User
 from core.models import Tournament
 from core.services.tournament_creation import tournament_creation
 from . import forms
@@ -39,3 +40,8 @@ def create_tournament(request):
         form = forms.CreateTournamentForm()
 
     return render(request, 'core/create_tournament.html', {'form': form})
+
+def player_page(request, id):
+    # return HttpResponse(User.objects.get(id=id).username)
+    player = get_object_or_404(User, id=id)
+    return render(request, "core/player_page.html", {'player':player})

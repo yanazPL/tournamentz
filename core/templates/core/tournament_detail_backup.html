@@ -1,0 +1,32 @@
+{% extends './base.html' %}
+
+{% block content %}
+{% load static %}
+
+<head>
+    <link rel="stylesheet" href="{% static 'css/tournament_detail.css' %}">
+</head>
+
+<body>
+    {% load core_extras %}
+    <h1>{{tournament.name}}<h1>
+            <main id="tournament">
+                {% for stage in tournament.stages %}
+                <ul class="stage stage-{{ stage }}">
+                    {% for match in tournament.match_set.all|in_stage:stage %}
+
+                    <li class="spacer">&nbsp;</li>
+
+                    <li
+                        class="game game-top {% if match.winner == match.player1 and match.player != None %}winner{% endif %}">
+                        {{match.player1}}<span>{{match.p1_score}}</span></li>
+                    <li class="game game-spacer">&nbsp;</li>
+                    <li
+                        class="game game-bottom {% if match.winner == match.player2 and match.player != None %}winner{% endif %}">
+                        {{match.player2}}<span>{{match.p2_score}}<span></span></li>
+                    {% endfor %}
+                    <li class="spacer">&nbsp;</li>
+                </ul>
+                {% endfor %}
+            </main>
+</body>

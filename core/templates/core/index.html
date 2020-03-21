@@ -1,3 +1,5 @@
+{% extends './base.html' %}
+{% block content %}
 <a href="{%url 'create_tournament'%}">
     <p>+ create fixed tournament</p>
 </a>
@@ -13,3 +15,4 @@
 {% else %}
 <p>No tournaments are available.</p>
 {% endif %}
+{% endblock %}

@@ -1,9 +1,14 @@
 /*
  *  Flex Layout Specifics
 */
-main {
+
+#tournament {
     display: flex;
     flex-direction: row;
+    font-weight: 600;
+    font-family: sans-serif;
+    font-size: 16px;
+    line-height: 1.4em;
 }
 
 .stage {
@@ -32,11 +37,11 @@ main {
    *  General Styles
   */
 body {
-    font-weight: 200;
+    /* font-weight: 200;
     font-family: sans-serif;
     font-size: 10px;
-    padding: 10px;
-    line-height: 1.4em;
+    padding: 10px; */
+    
 }
 
 li.game {
