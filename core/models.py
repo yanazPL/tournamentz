@@ -2,12 +2,11 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
-
 class Tournament(models.Model):
     name = models.CharField(max_length=200)
     start_time = models.DateTimeField(default=timezone.now())
-    players = models.ManyToManyField(User, related_name='played_tournaments', blank=True)
-    hosts = models.ManyToManyField(User, related_name='hosted_tournaments')
+    players = models.ManyToManyField("Player", related_name='played_tournaments', blank=True)
+    hosts = models.ManyToManyField("Player", related_name='hosted_tournaments')
     max_stages = models.PositiveSmallIntegerField(default=1)
     current_stage = models.PositiveSmallIntegerField(default=1)
     finished = models.BooleanField(default=False)
@@ -23,7 +22,7 @@ class Tournament(models.Model):
     def __str__(self):
         return self.name
 
-    def stages(self):
+    def  stages(self):
         return range(1, self.max_stages + 1)
 
     def matches_of_stage(self, stage):
@@ -31,8 +30,8 @@ class Tournament(models.Model):
 
 
 class Match(models.Model):
-    player1 = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name="matches_as_p1")
-    player2 = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name="matches_as_p2")
+    player1 = models.ForeignKey("Player", null=True, on_delete=models.SET_NULL, related_name="matches_as_p1")
+    player2 = models.ForeignKey("Player", null=True, on_delete=models.SET_NULL, related_name="matches_as_p2")
     start_time = models.DateTimeField(default=timezone.now())
     finished = models.BooleanField(default=False)
     p1_score = models.PositiveSmallIntegerField(default=0)
@@ -47,3 +46,11 @@ class Match(models.Model):
             return self.player2
         else:
             return None
+
+class Player(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    stats = models.OneToOneField("Stats", on_delete=models.CASCADE)
+
+class Stats(models.Model):
+    wins = models.PositiveIntegerField
+
