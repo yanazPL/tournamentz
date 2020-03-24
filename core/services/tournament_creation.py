@@ -1,8 +1,7 @@
-from django.contrib.auth.models import User
-from core.models import Tournament, Match
+from core.models import Tournament, Match, Player
 from math import log2, ceil
 from random import shuffle
-
+from django.core.exceptions import ObjectDoesNotExist
 
 def tournament_creation(
         tournament, name, bracket_type, usernames_str):
@@ -21,9 +20,10 @@ def usernames_to_player_list(players_str: str):
     player_list = []
     for player_str in usernames_list:
         try:
-            player_list.append(User.objects.get(username=player_str))
-        except DoesNotExist:
-        # TODO  deisplay error message
+            # player_list.append(User.objects.get(username=player_str).player)
+            player_list.append(Player.objects.get(user__username=player_str))
+        except ObjectDoesNotExist:
+            # TODO  deisplay error message
             continue
     return player_list
 
@@ -54,7 +54,7 @@ def create_se_matches(tournament, player_list):
             )
         matches_in_stage.append(match)
     for match in matches_in_stage:
-        if avaliable_players: 
+        if avaliable_players:
             match.player2 = (avaliable_players.pop()
                              if avaliable_players else None)
         match.save()

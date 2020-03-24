@@ -13,7 +13,7 @@
         <main id="tournament">
             {% for stage in tournament.stages %}
             <ul class="stage stage-{{ stage }}">
-                {% for match in tournament.match_set.all|in_stage:stage %}
+                {% for match in tournament.matches.all|in_stage:stage %}
 
                 <li class="spacer">&nbsp;</li>
 

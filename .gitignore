@@ -125,4 +125,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+# flake8 config
+.flake8
 # End of https://www.gitignore.io/api/code,django

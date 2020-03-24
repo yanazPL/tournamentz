@@ -31,14 +31,15 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
     'core',
     'accounts',
+    'django.contrib.admin',
 ]
 
 MIDDLEWARE = [
@@ -80,7 +81,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'tournamentzdb',
         'USER': 'postgres',
-        'PASSWORD' : 'Minda123',
+        'PASSWORD': 'Minda123',
         'HOST': 'localhost',
     }
 }

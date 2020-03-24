@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 
 class Tournament(models.Model):
     name = models.CharField(max_length=200)
@@ -22,7 +25,7 @@ class Tournament(models.Model):
     def __str__(self):
         return self.name
 
-    def  stages(self):
+    def stages(self):
         return range(1, self.max_stages + 1)
 
     def matches_of_stage(self, stage):
@@ -37,7 +40,7 @@ class Match(models.Model):
     p1_score = models.PositiveSmallIntegerField(default=0)
     p2_score = models.PositiveSmallIntegerField(default=0)
     stage = models.PositiveSmallIntegerField(default=1)
-    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE, null=True)
+    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE, null=True, related_name="matches")
 
     def winner(self):
         if self.p1_score > self.p2_score:
@@ -47,10 +50,35 @@ class Match(models.Model):
         else:
             return None
 
+    def __str__(self):
+        return str(self.player1) + " vs " + str(self.player2)
+
+
 class Player(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    stats = models.OneToOneField("Stats", on_delete=models.CASCADE)
+    stats = models.OneToOneField("Stats", on_delete=models.CASCADE, null=True)
+
+    @receiver(post_save, sender=User)
+    def create_player_profile(sender, instance, created, **kwargs):
+        if created:
+            Player.objects.create(user=instance)
+
+    @receiver(post_save, sender=User)
+    def save_player_profile(sender, instance, **kwargs):
+        instance.player.save()
+
+    def __str__(self):
+        return self.user.username
+
 
 class Stats(models.Model):
-    wins = models.PositiveIntegerField
+    wins = models.PositiveIntegerField(default=0)
+    loses = models.PositiveIntegerField(default=0)
+    @receiver(post_save, sender=Player)
+    def create_player_stats(sender, instance, created, **kwargs):
+        if created:
+            Stats.objects.create(player=instance)
 
+    @receiver(post_save, sender=Player)
+    def save_player_stats(sender, instance, **kwargs):
+        instance.stats.save()
