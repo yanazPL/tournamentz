@@ -1,0 +1,21 @@
+{% extends './base.html' %}
+{% block content %}
+{% if tournaments %}
+    <h1>Tournaments</h1>
+    <ul>
+        {% for tournament in tournaments %}
+        <li>
+            <h3><a href="{% url 'tournament_detail' tournament.id %}">{{tournament.name}}</h3></a>
+        </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% if players %}
+    <h1>Players</h1>
+    <ul>
+        {% for player in players %}
+            <li> <a href="{% url 'player_page' player.id %}">{{player.user.username}}</li></a>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% endblock %}

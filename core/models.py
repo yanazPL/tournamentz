@@ -13,6 +13,7 @@ class Tournament(models.Model):
     max_stages = models.PositiveSmallIntegerField(default=1)
     current_stage = models.PositiveSmallIntegerField(default=1)
     finished = models.BooleanField(default=False)
+    players_can_join = models.BooleanField(default=True)
     category = models.CharField(max_length=200, default="other")
     SINGLE_ELIMINATION = "SE"
     BRACKET_TYPE_CHOICES = [(SINGLE_ELIMINATION, "Single elimination")]
@@ -31,6 +32,10 @@ class Tournament(models.Model):
     def matches_of_stage(self, stage):
         return self.tournament.match_set.all().filter(stage=stage)
 
+    def add_players(self, player_list):
+        for player in player_list:
+            self.players.add(player)
+        self.save()
 
 class Match(models.Model):
     player1 = models.ForeignKey("Player", null=True, on_delete=models.SET_NULL, related_name="matches_as_p1")
